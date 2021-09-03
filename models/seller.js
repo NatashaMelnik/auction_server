@@ -14,10 +14,11 @@ const seller = sequelize.define("seller", {
     }
 });
 
-
+// 
 // efasefdwefd.hasOne(edfsecf);
 
 class Seller {
+
 
     getSellerById(id) {
         return seller.findAll({ where: { id: +id }, order: ['id'], raw: true })

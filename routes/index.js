@@ -4,6 +4,8 @@ const router = express.Router();
 const seller = require('./seller');
 const products = require('./products');
 const auctions = require('./auctions');
+const buyers = require('./buyers');
+const products_auction = require('./products_auctions');
 // 
 
 router.use((req, res, next) => {
@@ -20,6 +22,8 @@ router.use((req, res, next) => {
 router.use('/seller/', seller);
 router.use('/products/', products);
 router.use('/auctions/', auctions);
+router.use('/buyers/', buyers);
+router.use('/products_auction/', products_auction)
 // 
 
 module.exports = router;

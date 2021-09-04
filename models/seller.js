@@ -262,10 +262,122 @@ class AuctionClass {
     }
 }
 
+class BuyerClass {
+    getBuyerById(id) {
+        return buyers.findAll({ where: { id: +id } })
+            .then(res => {
+                return res;
+            }).catch(err => console.log(err));
+    }
+
+    getAllBuyers() {
+        return buyers.findAll({ order: ['id'] })
+            .then(res => {
+                return res;
+            }).catch(err => console.log(err));
+    }
+
+    addBuyer(body) {
+        return buyers.create({
+            fio: body.fio
+        }).then(res => {
+            return res;
+        }).catch(err => console.log(err));
+    }
+
+    updateBuyer(body) {
+        return buyers.update({ fio: body.fio }, {
+            where: { id: +body.id }
+        }).then(res => {
+            return res;
+        }).catch(err => console.log(err));
+    }
+
+    rewriteBuyer(body) {
+        return buyers.update({ 
+            fio: body.fio
+        }, {
+            where: { id: +body.id }
+        }).then(res => {
+            return res;
+        }).catch(err => console.log(err));
+    }
+
+    deleteBuyer(body) {
+        return buyers.destroy({
+            where: { id: +body.id }
+        }).then(res => {
+            return res;
+        }).catch(err => console.log(err));
+    }
+}
+
+class ProdauctionClass {
+    getProdauctionById(id) {
+        return products_auction.findAll({ where: { id: +id } })
+            .then(res => {
+                return res;
+            }).catch(err => console.log(err));
+    }
+
+    getAllProdauction() {
+        return products_auction.findAll({ order: ['id'] })
+            .then(res => {
+                return res;
+            }).catch(err => console.log(err));
+    }
+
+    addProdauction(body) {
+        return products_auction.create({
+            id_auction: body.id_auction,
+            lot: body.lot,
+            start_price: body.start_price,
+            fin_price: body.fin_price,
+            id_buyer: body.id_buyer
+        }).then(res => {
+            return res;
+        }).catch(err => console.log(err));
+    }
+
+    updateProdauction(body) {
+        return products_auction.update({ fin_price: body.fin_price }, {
+            where: { id: +body.id }
+        }).then(res => {
+            return res;
+        }).catch(err => console.log(err));
+    }
+
+    rewriteProdauction(body) {
+        return products_auction.update({ 
+            id_auction: body.id_auction,
+            lot: body.lot,
+            start_price: body.start_price,
+            fin_price: body.fin_price,
+            id_buyer: body.id_buyer
+        }, {
+            where: { id: +body.id }
+        }).then(res => {
+            return res;
+        }).catch(err => console.log(err));
+    }
+
+    deleteProdauction(body) {
+        return products_auction.destroy({
+            where: { id: +body.id }
+        }).then(res => {
+            return res;
+        }).catch(err => console.log(err));
+    }
+}
+
 const Seller = new SellerClass();
 const Product = new ProductsClass();
 const Auction = new AuctionClass();
+const Buyer = new BuyerClass();
+const Prodauction = new ProdauctionClass();
 
 module.exports = Seller;
 module.exports = Product;
 module.exports = Auction;
+module.exports = Buyer;
+module.exports = Prodauction;

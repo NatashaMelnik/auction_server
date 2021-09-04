@@ -211,8 +211,61 @@ class ProductsClass {
     }
 }
 
+class AuctionClass {
+
+    getAuctionById(id) {
+        return auctions.findAll({ where: { id: +id } })
+            .then(res => {
+                return res;
+            }).catch(err => console.log(err));
+    }
+
+    getAllAuctions() {
+        return auctions.findAll({ order: ['id'] })
+            .then(res => {
+                return res;
+            }).catch(err => console.log(err));
+    }
+
+    addAuction(body) {
+        return auctions.create({
+            date: body.date
+        }).then(res => {
+            return res;
+        }).catch(err => console.log(err));
+    }
+
+    updateAuction(body) {
+        return auctions.update({ date: body.date }, {
+            where: { id: +body.id }
+        }).then(res => {
+            return res;
+        }).catch(err => console.log(err));
+    }
+
+    rewriteAuction(body) {
+        return auctions.update({ 
+            date: body.date
+        }, {
+            where: { id: +body.id }
+        }).then(res => {
+            return res;
+        }).catch(err => console.log(err));
+    }
+
+    deleteAuction(body) {
+        return auctions.destroy({
+            where: { id: +body.id }
+        }).then(res => {
+            return res;
+        }).catch(err => console.log(err));
+    }
+}
+
 const Seller = new SellerClass();
 const Product = new ProductsClass();
+const Auction = new AuctionClass();
 
 module.exports = Seller;
 module.exports = Product;
+module.exports = Auction;

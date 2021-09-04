@@ -8,7 +8,7 @@ class TaskController {
 
     getAllProducts() {
         return Product.getAllProducts();
-    }
+    } 
 
     addProduct(body) {
         return Product.addProduct(body);

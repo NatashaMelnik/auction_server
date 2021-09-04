@@ -1,10 +1,10 @@
 const router = require('express').Router()
 
-const controller = require('../controllers/seller');
+const controller = require('../controllers/products');
 
 const read = function () {
     router.get('/all', function (req, res) {
-        controller.getAllSellers()
+        controller.getAllProducts()
             .then(data => {
                 res.send(data);
             })
@@ -13,7 +13,7 @@ const read = function () {
             });
     });
     router.get('/:id', function (req, res) {
-        controller.getSellerById(req.params.id)
+        controller.getProductById(req.params.id)
             .then(data => {
                 res.send(data);
             })
@@ -25,22 +25,22 @@ const read = function () {
 
 const write = function () {
     router.post('/', function (req, res) {
-        controller.addSeller(req.body)
+        controller.addProduct(req.body)
             .then(m => res.json(m))
             .catch(err => res.status(500).json({ error: err }));
     });
     router.patch('/', function (req, res) {
-        controller.updateSeller(req.body)
+        controller.updateProduct(req.body)
             .then(m => res.json(m))
             .catch(err => res.status(500).json({ error: err }));
     });
     router.put('/', function (req, res) {
-        controller.rewriteSeller(req.body)
+        controller.rewriteProduct(req.body)
             .then(m => res.json(m))
             .catch(err => res.status(500).json({ error: err }));
     });
     router.delete('/', function (req, res) {
-        controller.deleteSeller(req.body)
+        controller.deleteProduct(req.body)
             .then(m => res.json(m))
             .catch(err => res.status(500).json({ error: err }));
     });

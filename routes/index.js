@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const seller = require('./seller');
+const products = require('./products');
 // 
 
 router.use((req, res, next) => {
@@ -16,6 +17,7 @@ router.use((req, res, next) => {
 
 
 router.use('/seller/', seller);
+router.use('/products/', products);
 // 
 
 module.exports = router;

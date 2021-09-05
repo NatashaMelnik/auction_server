@@ -25,19 +25,27 @@ const products = sequelize.define('products', {
         type: Sequelize.TEXT,
         allowNull: false
     },
-    type: {
-        type: Sequelize.TEXT,
-        allowNull: false
-    },
-    date: {
-        type: Sequelize.DATE,
-        allowNull: false
-    },
     sold: {
         type: Sequelize.BOOLEAN,
         allowNull: false
     },
     id_seller: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+    },
+    id_buyer: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+    },
+    start_price: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+    },
+    fin_price: {
+        type: Sequelize.INTEGER,
+        allowNull: true
+    },
+    id_auction: {
         type: Sequelize.INTEGER,
         allowNull: false
     }
@@ -98,10 +106,13 @@ const products_auction = sequelize.define('products_auction', {
     }
 });
 
-// products.hasOne(seller);
+products.hasOne(seller);
+products.hasOne(buyers);
+products.hasOne(auctions);
 // seller.belongsToMany(products);
 // products_auction.hasOne(auctions);
 // products_auction.hasOne(buyers);
+
 class SellerClass {
 
     getSellerById(id) {
@@ -170,10 +181,11 @@ class ProductsClass {
 
     addProduct(body) {
         return products.create({
-            name: body.name,
-            type: body.type,
-            date: body.date,
-            sold: body.sold,
+            id_auction: body.id_auction,
+            lot: body.lot,
+            start_price: body.start_price,
+            fin_price: body.fin_price,
+            id_buyer: body.id_buyer,
             id_seller: body.id_seller
         }).then(res => {
             return res;
@@ -189,12 +201,13 @@ class ProductsClass {
     }
 
     rewriteProduct(body) {
-        return products.update({ 
-            name: body.name,
-            type: body.type,
-            date: body.date,
-            sold: body.sold,
-            id_seller: body.id_seller 
+        return products.update({
+            id_auction: body.id_auction,
+            lot: body.lot,
+            start_price: body.start_price,
+            fin_price: body.fin_price,
+            id_buyer: body.id_buyer,
+            id_seller: body.id_seller
         }, {
             where: { id: +body.id }
         }).then(res => {
@@ -244,7 +257,7 @@ class AuctionClass {
     }
 
     rewriteAuction(body) {
-        return auctions.update({ 
+        return auctions.update({
             date: body.date
         }, {
             where: { id: +body.id }
@@ -294,7 +307,7 @@ class BuyerClass {
     }
 
     rewriteBuyer(body) {
-        return buyers.update({ 
+        return buyers.update({
             fio: body.fio
         }, {
             where: { id: +body.id }
@@ -348,7 +361,7 @@ class ProdauctionClass {
     }
 
     rewriteProdauction(body) {
-        return products_auction.update({ 
+        return products_auction.update({
             id_auction: body.id_auction,
             lot: body.lot,
             start_price: body.start_price,

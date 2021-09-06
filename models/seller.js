@@ -77,41 +77,43 @@ const buyers = sequelize.define('buyers', {
     }
 });
 
-const products_auction = sequelize.define('products_auction', {
-    id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-        allowNull: false
-    },
-    id_auction: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-    },
-    lot: {
-        type: Sequelize.TEXT,
-        allowNull: false
-    },
-    start_price: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-    },
-    fin_price: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-    },
-    id_buyer: {
-        type: Sequelize.INTEGER,
-        allowNull: false
+seller.hasMany(products, {
+    foreignKey: {
+        name: 'id'
     }
 });
-
-products.hasOne(seller);
-products.hasOne(buyers);
-products.hasOne(auctions);
+products.belongsTo(seller, {
+    foreignKey: {
+        name: 'id_seller'
+    }
+});
+buyers.hasMany(products, {
+    foreignKey: {
+        name: 'id'
+    }
+});
+products.belongsTo(buyers, {
+    foreignKey: {
+        name: 'id_buyer'
+    }
+});
+auctions.hasMany(products, {
+    foreignKey: {
+        name: 'id'
+    }
+});
+products.belongsTo(auctions, {
+    foreignKey: {
+        name: 'id_auction'
+    }
+});
 // seller.belongsToMany(products);
 // products_auction.hasOne(auctions);
 // products_auction.hasOne(buyers);
+
+sequelize.sync({ force: true }).then(() => {
+    console.log("Tables have been created");
+}).catch(err => console.log(err));
 
 class SellerClass {
 
@@ -326,61 +328,61 @@ class BuyerClass {
 }
 
 class ProdauctionClass {
-    getProdauctionById(id) {
-        return products_auction.findAll({ where: { id: +id } })
-            .then(res => {
-                return res;
-            }).catch(err => console.log(err));
-    }
+//     getProdauctionById(id) {
+//         return products_auction.findAll({ where: { id: +id } })
+//             .then(res => {
+//                 return res;
+//             }).catch(err => console.log(err));
+//     }
 
-    getAllProdauction() {
-        return products_auction.findAll({ order: ['id'] })
-            .then(res => {
-                return res;
-            }).catch(err => console.log(err));
-    }
+//     getAllProdauction() {
+//         return products_auction.findAll({ order: ['id'] })
+//             .then(res => {
+//                 return res;
+//             }).catch(err => console.log(err));
+//     }
 
-    addProdauction(body) {
-        return products_auction.create({
-            id_auction: body.id_auction,
-            lot: body.lot,
-            start_price: body.start_price,
-            fin_price: body.fin_price,
-            id_buyer: body.id_buyer
-        }).then(res => {
-            return res;
-        }).catch(err => console.log(err));
-    }
+//     addProdauction(body) {
+//         return products_auction.create({
+//             id_auction: body.id_auction,
+//             lot: body.lot,
+//             start_price: body.start_price,
+//             fin_price: body.fin_price,
+//             id_buyer: body.id_buyer
+//         }).then(res => {
+//             return res;
+//         }).catch(err => console.log(err));
+//     }
 
-    updateProdauction(body) {
-        return products_auction.update({ fin_price: body.fin_price }, {
-            where: { id: +body.id }
-        }).then(res => {
-            return res;
-        }).catch(err => console.log(err));
-    }
+//     updateProdauction(body) {
+//         return products_auction.update({ fin_price: body.fin_price }, {
+//             where: { id: +body.id }
+//         }).then(res => {
+//             return res;
+//         }).catch(err => console.log(err));
+//     }
 
-    rewriteProdauction(body) {
-        return products_auction.update({
-            id_auction: body.id_auction,
-            lot: body.lot,
-            start_price: body.start_price,
-            fin_price: body.fin_price,
-            id_buyer: body.id_buyer
-        }, {
-            where: { id: +body.id }
-        }).then(res => {
-            return res;
-        }).catch(err => console.log(err));
-    }
+//     rewriteProdauction(body) {
+//         return products_auction.update({
+//             id_auction: body.id_auction,
+//             lot: body.lot,
+//             start_price: body.start_price,
+//             fin_price: body.fin_price,
+//             id_buyer: body.id_buyer
+//         }, {
+//             where: { id: +body.id }
+//         }).then(res => {
+//             return res;
+//         }).catch(err => console.log(err));
+//     }
 
-    deleteProdauction(body) {
-        return products_auction.destroy({
-            where: { id: +body.id }
-        }).then(res => {
-            return res;
-        }).catch(err => console.log(err));
-    }
+//     deleteProdauction(body) {
+//         return products_auction.destroy({
+//             where: { id: +body.id }
+//         }).then(res => {
+//             return res;
+//         }).catch(err => console.log(err));
+//     }
 }
 
 const Seller = new SellerClass();

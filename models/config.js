@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('army_bd', 'postgres', 'qazpoi', {
+const sequelize = new Sequelize('auction_db', 'postgres', 'qazpoi', {
   dialect: 'postgres',
   host: 'localhost',
   define: {
